@@ -23,9 +23,9 @@ namespace Dictionary
     {
         public MainWindow()
         {
-            DatabaseEmulator databaseEmulator = new DatabaseEmulator();
-            List<Word> words = (List<Word>)databaseEmulator.GetWordsFromFile();
-            databaseEmulator.WriteWordsToFile(words);
+            //DatabaseEmulator databaseEmulator = new DatabaseEmulator();
+            //List<Word> words = (List<Word>)databaseEmulator.GetWordsFromFile();
+            //databaseEmulator.WriteWordsToFile(words);
             InitializeComponent();
         }
     }
