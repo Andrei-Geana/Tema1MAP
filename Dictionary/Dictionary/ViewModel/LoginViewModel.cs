@@ -14,9 +14,9 @@ namespace Dictionary.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        private DatabaseEmulator emulator;
+        private readonly DatabaseEmulator emulator;
 
-        private ObservableCollection<User> users;
+        private readonly ObservableCollection<User> users;
 
 
         private string _username;
@@ -42,10 +42,12 @@ namespace Dictionary.ViewModel
         }
 
         public ICommand LoginCommand { get; }
+        public ICommand ResetCommand { get; }
 
         public LoginViewModel()
         {
             LoginCommand = new SubmitLoginCommand(this);
+            ResetCommand = new ResetLoginButton(this);
             emulator = new DatabaseEmulator();
             users = new ObservableCollection<User>(emulator.GetUsersFromFile());
         }
