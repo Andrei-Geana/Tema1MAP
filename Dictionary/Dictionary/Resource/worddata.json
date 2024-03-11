@@ -1,0 +1,14 @@
+[
+  {
+    "word": "caine",
+    "category": "animal",
+    "description": "latra",
+    "path": null
+  },
+  {
+    "word": "noptiera",
+    "category": "mobilier",
+    "description": "facuta din lemn, are 4 picioare",
+    "path": "./Resource/Image/noptiera.jpg"
+  }
+]
