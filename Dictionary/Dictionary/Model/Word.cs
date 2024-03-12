@@ -16,7 +16,7 @@ namespace Dictionary.Model
         [JsonProperty("description")]
         private string description;
         [JsonProperty("path", NullValueHandling = NullValueHandling.Ignore)]
-        private string pathToImage = "./Resource/Image/NoImage.jpg";
+        private string pathToImage = DefaultPath;
 
         [JsonIgnore]
         public string WordValue { get => wordValue; set => wordValue = value; }
@@ -26,6 +26,9 @@ namespace Dictionary.Model
         public string Description { get => description; set => description = value; }
         [JsonIgnore]
         public string PathToImage { get => pathToImage; set => pathToImage = value; }
+
+        [JsonIgnore]
+        public static string DefaultPath = "./Resource/Image/NoImage.jpg";
 
         public Word()
         {

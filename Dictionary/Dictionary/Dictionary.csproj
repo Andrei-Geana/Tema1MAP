@@ -88,7 +88,9 @@
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\ResetLoginButton.cs" />
     <Compile Include="Command\SubmitLoginCommand.cs" />
+    <Compile Include="Service\IntToStringConverter.cs" />
     <Compile Include="Service\StringToImageConverter.cs" />
+    <Compile Include="ViewModel\DivertismentViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\UserMenuViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
