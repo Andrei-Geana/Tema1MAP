@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,19 @@ namespace Dictionary.Model
 {
     internal class DatabaseEmulator
     {
+        public ObservableCollection<Word> words;
+        public ObservableCollection<User> users;
+
         private static readonly string _pathToWords = "D:\\facultate\\an2\\sem2\\MAP\\Tema1MAP\\Dictionary\\Dictionary\\Resource\\worddata.json";
         private static readonly string _pathToUsers = "D:\\facultate\\an2\\sem2\\MAP\\Tema1MAP\\Dictionary\\Dictionary\\Resource\\userdata.json";
 
-        public DatabaseEmulator() {/*EMPTY*/; }
+        public DatabaseEmulator() 
+        {
+            words = GetWordsFromFile() ?? new ObservableCollection<Word>();
+            users = GetUsersFromFile() ?? new ObservableCollection<User>();
+        }
 
-        public IEnumerable<Word> GetWordsFromFile()
+        public ObservableCollection<Word> GetWordsFromFile()
         {
             try
             {
@@ -22,7 +30,7 @@ namespace Dictionary.Model
                 using (StreamReader reader = new StreamReader(json))
                 {
                     string jsonString = reader.ReadToEnd();
-                    List<Word> words = JsonConvert.DeserializeObject<List<Word>>(jsonString);
+                    ObservableCollection<Word> words = JsonConvert.DeserializeObject<ObservableCollection<Word>>(jsonString);
                     return words;
                 }
             }
@@ -45,7 +53,7 @@ namespace Dictionary.Model
             catch (Exception) { }
         }
 
-        public IEnumerable<User> GetUsersFromFile()
+        public ObservableCollection<User> GetUsersFromFile()
         {
             try
             {
@@ -53,7 +61,7 @@ namespace Dictionary.Model
                 using (StreamReader reader = new StreamReader(json))
                 {
                     string jsonString = reader.ReadToEnd();
-                    IEnumerable<User> users = JsonConvert.DeserializeObject<IEnumerable<User>>(jsonString);
+                    ObservableCollection<User> users = JsonConvert.DeserializeObject<ObservableCollection<User>>(jsonString);
                     return users;
                 }
             }
@@ -74,6 +82,14 @@ namespace Dictionary.Model
                 }
             }
             catch (Exception) { }
+        }
+
+        public ObservableCollection<string> GetCategories()
+        {
+            if (words.Count == 0)
+                return new ObservableCollection<string>();
+            return new ObservableCollection<string>(
+                 words.DefaultIfEmpty().Select(w => w.Category).Distinct().ToList());
         }
     }
 }

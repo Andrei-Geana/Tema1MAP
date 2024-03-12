@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dictionary.Model
 {
-    internal class Word
+    public class Word
     {
         [JsonProperty("word")]
         private string wordValue;
@@ -16,7 +16,7 @@ namespace Dictionary.Model
         [JsonProperty("description")]
         private string description;
         [JsonProperty("path", NullValueHandling = NullValueHandling.Ignore)]
-        private string pathToImage = "./Resource/Image/NoImage.png";
+        private string pathToImage = "./Resource/Image/NoImage.jpg";
 
         [JsonIgnore]
         public string WordValue { get => wordValue; set => wordValue = value; }

@@ -46,10 +46,11 @@ namespace Dictionary.ViewModel
 
         public LoginViewModel()
         {
+            emulator = new DatabaseEmulator();
+            users = new ObservableCollection<User>(emulator.users);
+
             LoginCommand = new SubmitLoginCommand(this);
             ResetCommand = new ResetLoginButton(this);
-            emulator = new DatabaseEmulator();
-            users = new ObservableCollection<User>(emulator.GetUsersFromFile());
         }
 
         public bool CanExecuteLogin => HasUsername && HasPassword && UserIsValid;
