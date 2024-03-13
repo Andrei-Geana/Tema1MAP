@@ -1,4 +1,5 @@
-﻿using Dictionary.Model;
+﻿using Dictionary.Command;
+using Dictionary.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace Dictionary.ViewModel
@@ -15,20 +18,26 @@ namespace Dictionary.ViewModel
     {
         private DatabaseEmulator emulator;
         private List<Word> words;
-        private int currentRoundIndex = 0;
-        private int numberOfRounds = 5;
+        private int _currentRoundIndex = 0;
+        private int _numberOfRounds = 5;
         public DivertismentViewModel()
         {
             emulator = new DatabaseEmulator();
             words = emulator.GetWordsFromFile().ToList();
-            ShuffleWords();
-            ImageIsShown = ImageIsToBeShown();
+            StartAnotherGame();
+            NextWordCommand = new QuizNextWorkCommand(this);
+            PreviousWordCommand = new QuizPreviousWordCommand(this);
+
         }
+
+        public ICommand NextWordCommand { get; set; }
+
+        public ICommand PreviousWordCommand { get; set; }
 
         private void ShuffleWords()
         {
             var random = new Random();
-            int n = words.Count;
+            int n = words.Count();
             while (n > 1)
             {
                 n--;
@@ -37,66 +46,142 @@ namespace Dictionary.ViewModel
             }
         }
 
-        private string _input;
+        private List<string> _input;
 
         public string Input
         {
-            get => _input;
+            get => _input[_currentRoundIndex];
             set
             {
-                _input = value;
+                _input[_currentRoundIndex] = value;
                 OnPropertyChanged(nameof(Input));
             }
         }
 
         public int CurrentRoundIndex
         {
-            get => currentRoundIndex+1;
+            get => _currentRoundIndex + 1;
             set
             {
-                currentRoundIndex = value;
+                _currentRoundIndex = value;
                 OnPropertyChanged(nameof(CurrentRoundIndex));
             }
         }
 
         public int NumberOfRounds
         {
-            get => numberOfRounds;
+            get => _numberOfRounds;
             set
             {
-                numberOfRounds = value;
+                _numberOfRounds = value;
                 OnPropertyChanged(nameof(NumberOfRounds));
             }
         }
 
         public Word CurrentWord
         {
-            get => words[currentRoundIndex];
+            get => words[_currentRoundIndex];
         }
+
+        private List<bool> _imageIsShown;
         public bool ImageIsShown
-        { 
-            get => _imageIsShown;
-            set 
+        {
+            get => _imageIsShown[_currentRoundIndex];
+            set
             {
-                _imageIsShown = value;
+                _imageIsShown[_currentRoundIndex] = value;
                 OnPropertyChanged(nameof(ImageIsShown));
             }
         }
 
-        private bool ImageIsToBeShown()
+        private void DecideIfImagineIsShownForEachWord()
         {
             //Returns true if an image is to be shown, or false otherwise
             var random = new Random();
-            if (CurrentWord.PathToImage != Word.DefaultPath)
+            for(int index=0; index<NumberOfRounds;index++)
             {
-                int k = random.Next(2);
-                if (k == 1)
-                    return true;
+                if (words[index].PathToImage == Word.DefaultPath)
+                {
+                    _imageIsShown[index] = false;
+                    continue;
+                }
+                int k = random.Next(int.MaxValue);
+                if (k % 2 == 1)
+                    _imageIsShown[index] = true;
+                else
+                    _imageIsShown[index] = false;
             }
-            return false;
         }
 
-        private bool _imageIsShown;
+        public void ExecuteNextWordCommand()
+        {
+            if (_currentRoundIndex < _numberOfRounds - 1)
+            {
+                _currentRoundIndex++; 
+                NotifyAll();
+            }
+            else
+            {
+                ShowScore();
+                StartAnotherGame();
+            }
+
+        }
+
+        public void ExecutePreviousWordCommand()
+        {
+            _currentRoundIndex--; 
+            NotifyAll();
+
+        }
+
+        private void StartAnotherGame()
+        {
+            _currentRoundIndex = 0;
+            _input = Enumerable.Repeat(string.Empty, _numberOfRounds).ToList();
+            _imageIsShown = Enumerable.Repeat(false, _numberOfRounds).ToList();
+            ShuffleWords();
+            DecideIfImagineIsShownForEachWord();
+            NotifyAll();
+
+        }
+
+        private void ShowScore()
+        {
+            int score = CalculateScore();
+            MessageBox.Show($"Your score is {score} out of {_numberOfRounds}");
+        }
+
+        private int CalculateScore()
+        {
+            int score = 0;
+            for (int i = 0; i < _numberOfRounds; i++)
+            {
+                if (words[i].WordValue == _input[i]) score++;
+            }
+            return score;
+        }
+
+        public string RightButtonContent
+        {
+            get => (CurrentRoundIndex == NumberOfRounds) ? "Finish" : "Next";
+        }
+
+        public bool LeftButtonIsEnabled
+        {
+            get => (CurrentRoundIndex != 1) ? true : false;
+        }
+
+        private void NotifyAll()
+        {
+
+            OnPropertyChanged(nameof(CurrentRoundIndex));
+            OnPropertyChanged(nameof(CurrentWord));
+            OnPropertyChanged(nameof(Input));
+            OnPropertyChanged(nameof(RightButtonContent));
+            OnPropertyChanged(nameof(LeftButtonIsEnabled));
+            OnPropertyChanged(nameof(ImageIsShown));
+        }
 
     }
 }

@@ -44,10 +44,21 @@
             </Label.Content>
         </Label>
 
-        <Button Grid.Row="5" Grid.Column="0" Margin="10" Content="PREVIOUS" IsEnabled="True"/>
-        <Button Grid.Row="5" Grid.Column="2" Margin="10" Content="NEXT" IsEnabled="True"/>
+        <Button Grid.Row="5" Grid.Column="0" Margin="10" Content="PREVIOUS" Command="{Binding PreviousWordCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=LeftButtonIsEnabled}" Value="false">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Grid.Row="5" Grid.Column="2" Margin="10" Content="{Binding RightButtonContent, UpdateSourceTrigger=PropertyChanged}" IsEnabled="True" Command="{Binding NextWordCommand}"/>
 
-        <TextBox Grid.Row="4" Grid.Column="1" Margin="50,10,50,37" Text="YOUR INPUT" FontSize="16px"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="50,10,50,37" Text="{Binding Input}" FontSize="16px"/>
         <Button Grid.Row="0" Grid.Column="0" Content="EXIT" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50px"/>
         <ItemsControl BorderThickness="1px" BorderBrush="Red" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Center">
             <TextBlock Text="{Binding CurrentWord.Description, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap">

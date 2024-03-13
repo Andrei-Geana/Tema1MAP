@@ -22,5 +22,11 @@
     "category": "mobilier",
     "description": "Dulăpior sau măsuță care se așază lângă pat pentru a se ține la îndemână diverse obiecte necesare noaptea; măsuță de noapte.",
     "path": "./Resource/Image/noptiera.jpg"
+  },
+  {
+    "word": "vanator",
+    "category": "om",
+    "description": "om care vaneaza",
+    "path": null
   }
 ]

@@ -86,6 +86,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\CommandBase.cs" />
+    <Compile Include="Command\QuizNextWorkCommand.cs" />
+    <Compile Include="Command\QuizPreviousWordCommand.cs" />
     <Compile Include="Command\ResetLoginButton.cs" />
     <Compile Include="Command\SubmitLoginCommand.cs" />
     <Compile Include="Service\IntToStringConverter.cs" />
