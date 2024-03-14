@@ -34,7 +34,6 @@ namespace Dictionary.View
 
         private void LoginViewModel_LoginSuccess(object sender, EventArgs e)
         {
-            // Închide fereastra curentă
             this.Close();
             AdminMenu loginMenu = new AdminMenu(emulator);
             loginMenu.ShowDialog();

@@ -33,7 +33,12 @@ namespace Dictionary.View
         private void ComboBoxWords_TextChanged(object sender, TextChangedEventArgs e)
         {
             UserMenuViewModel currentViewModel = (this.DataContext) as UserMenuViewModel;
-            if (currentViewModel.SearchText.Length > 0)
+            if(currentViewModel.SearchText is null) 
+            {
+                
+                (sender as ComboBox).IsDropDownOpen = false;
+            }
+            else if (currentViewModel.SearchText.Length > 0)
             {
                 (sender as ComboBox).IsDropDownOpen = true;
             }
@@ -52,6 +57,7 @@ namespace Dictionary.View
             UserMenuViewModel currentViewModel = (this.DataContext) as UserMenuViewModel;
             string newCategory = (e.AddedItems[0] as string);
             currentViewModel.Category = newCategory;
+            currentViewModel.SearchText = null;
             currentViewModel.OnPropertyChanged(nameof(currentViewModel.FilteredWords));
 
         }
