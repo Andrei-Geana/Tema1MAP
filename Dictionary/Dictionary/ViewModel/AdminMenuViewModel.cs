@@ -20,7 +20,12 @@ namespace Dictionary.ViewModel
 
         public AdminMenuViewModel()
         {
-            emulator = new DatabaseEmulator();
+            /*EMPTY*/
+        }
+
+        public AdminMenuViewModel(DatabaseEmulator databaseEmulator)
+        {
+            emulator = databaseEmulator;
             Words = emulator.GetWordsFromFile();
             CurrentWord = new Word();
             Categories = emulator.GetCategories();

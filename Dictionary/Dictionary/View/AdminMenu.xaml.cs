@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dictionary.Model;
+using Dictionary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,11 @@ namespace Dictionary.View
     /// </summary>
     public partial class AdminMenu : Window
     {
-        public AdminMenu()
+        public AdminMenu(object dContext)
         {
             InitializeComponent();
+            AdminMenuViewModel loginViewModel = new AdminMenuViewModel(dContext as DatabaseEmulator);
+            DataContext = loginViewModel;
         }
     }
 }

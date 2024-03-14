@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Dictionary.Model
 {
-    internal class DatabaseEmulator
+    public class DatabaseEmulator
     {
         public ObservableCollection<Word> words;
         public ObservableCollection<User> users;

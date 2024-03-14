@@ -3,6 +3,7 @@ using Dictionary.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,11 @@ namespace Dictionary.View
     /// </summary>
     public partial class UserMenu : Window
     {
-        public UserMenu()
+        public UserMenu(object dContext)
         {
             InitializeComponent();
+            UserMenuViewModel loginViewModel = new UserMenuViewModel(dContext as DatabaseEmulator);
+            DataContext = loginViewModel;
         }
 
         private void ComboBoxWords_TextChanged(object sender, TextChangedEventArgs e)

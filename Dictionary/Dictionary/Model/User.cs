@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dictionary.Model
 {
-    internal class User
+    public class User
     {
         [JsonProperty("username")]
         private string _username;

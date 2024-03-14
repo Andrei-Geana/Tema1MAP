@@ -1,4 +1,5 @@
-﻿using Dictionary.ViewModel;
+﻿using Dictionary.Model;
+using Dictionary.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,12 @@ namespace Dictionary.View
     /// </summary>
     public partial class LoginMenu : Window
     {
-        public LoginMenu()
+        private readonly DatabaseEmulator emulator;
+        public LoginMenu(object dContext)
         {
             InitializeComponent();
-            LoginViewModel loginViewModel = new LoginViewModel();
+            emulator = dContext as DatabaseEmulator;
+            LoginViewModel loginViewModel = new LoginViewModel(emulator);
             loginViewModel.LoginSuccess += LoginViewModel_LoginSuccess;
             DataContext = loginViewModel;
         }
@@ -33,8 +36,8 @@ namespace Dictionary.View
         {
             // Închide fereastra curentă
             this.Close();
-            AdminMenu loginMenu = new AdminMenu();
-            loginMenu.Show();
+            AdminMenu loginMenu = new AdminMenu(emulator);
+            loginMenu.ShowDialog();
         }
     }
 }

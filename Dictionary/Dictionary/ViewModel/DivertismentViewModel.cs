@@ -20,9 +20,15 @@ namespace Dictionary.ViewModel
         private List<Word> words;
         private int _currentRoundIndex = 0;
         private int _numberOfRounds = 5;
+
         public DivertismentViewModel()
         {
-            emulator = new DatabaseEmulator();
+            /*EMPTY*/
+        }
+
+        public DivertismentViewModel(DatabaseEmulator databaseEmulator)
+        {
+            emulator = databaseEmulator;
             words = emulator.GetWordsFromFile().ToList();
             StartAnotherGame();
             NextWordCommand = new QuizNextWorkCommand(this);

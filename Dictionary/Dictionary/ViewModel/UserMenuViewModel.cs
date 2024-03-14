@@ -12,9 +12,9 @@ namespace Dictionary.ViewModel
     public class UserMenuViewModel : ViewModelBase
     {
         private static string _defaultCategory = "all";
-        public UserMenuViewModel()
+        public UserMenuViewModel(DatabaseEmulator databaseEmulator)
         {
-            emulator = new DatabaseEmulator();
+            emulator = databaseEmulator;
             words = emulator.GetWordsFromFile();
 
             ObservableCollection<string> categories = emulator.GetCategories();
@@ -22,6 +22,11 @@ namespace Dictionary.ViewModel
             Categories = categories;
 
             _defaultWord = new Word("-", _defaultCategory, "-");
+        }
+
+        public UserMenuViewModel()
+        {
+            /*EMPTY*/
         }
 
         private DatabaseEmulator emulator;

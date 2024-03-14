@@ -46,7 +46,12 @@ namespace Dictionary.ViewModel
 
         public LoginViewModel()
         {
-            emulator = new DatabaseEmulator();
+            /*EMPTY*/
+        }
+
+        public LoginViewModel(DatabaseEmulator databaseEmulator)
+        {
+            emulator = databaseEmulator;
             users = new ObservableCollection<User>(emulator.users);
 
             LoginCommand = new SubmitLoginCommand(this);

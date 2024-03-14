@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dictionary.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace Dictionary.View
     /// </summary>
     public partial class MainMenu : UserControl
     {
+        private static DatabaseEmulator databaseEmulator = new DatabaseEmulator();
         public MainMenu()
         {
             InitializeComponent();
@@ -27,20 +29,20 @@ namespace Dictionary.View
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            LoginMenu loginMenu = new LoginMenu();
-            loginMenu.Show();
+            LoginMenu loginMenu = new LoginMenu(databaseEmulator);
+            loginMenu.ShowDialog();
         }
 
         private void UserMenu_Click(object sender, RoutedEventArgs e)
         {
-            UserMenu lWind = new UserMenu();
-            lWind.Show();
+            UserMenu lWind = new UserMenu(databaseEmulator);
+            lWind.ShowDialog();
         }
 
         private void Quiz_Click(object sender, RoutedEventArgs e)
         {
-            Divertisment lWind = new Divertisment();
-            lWind.Show();
+            Divertisment lWind = new Divertisment(databaseEmulator);
+            lWind.ShowDialog();
         }
     }
 }
