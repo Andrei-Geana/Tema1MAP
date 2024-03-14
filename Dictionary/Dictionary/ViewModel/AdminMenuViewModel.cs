@@ -78,7 +78,8 @@ namespace Dictionary.ViewModel
             try
             {
                 emulator.AddWord(CurrentWord);
-                Words = emulator.GetWordsFromFile();
+                Words = emulator.GetWordsFromFile(); 
+                NewWord();
                 Categories = emulator.GetCategories();
             }
             catch (NotImplementedException)
@@ -112,12 +113,13 @@ namespace Dictionary.ViewModel
             }
             emulator.ModifyWord(CurrentWord, Words.IndexOf(CurrentWord));
             Words = emulator.GetWordsFromFile();
+            NewWord();
             Categories = emulator.GetCategories();
         }
 
         public void DeleteWord()
         {
-            if (CurrentWord is null)
+            if (CurrentWord is null || string.IsNullOrEmpty(CurrentWord.WordValue))
             {
                 MessageBox.Show("Nu ai selectat un cuvant!");
                 return;
