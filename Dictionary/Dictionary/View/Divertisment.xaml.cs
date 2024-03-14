@@ -18,7 +18,7 @@ namespace Dictionary.View
     /// <summary>
     /// Interaction logic for Divertisment.xaml
     /// </summary>
-    public partial class Divertisment : UserControl
+    public partial class Divertisment : Window
     {
         public Divertisment()
         {

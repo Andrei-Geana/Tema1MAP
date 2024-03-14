@@ -20,7 +20,7 @@ namespace Dictionary.View
     /// <summary>
     /// Interaction logic for UserMenu.xaml
     /// </summary>
-    public partial class UserMenu : UserControl
+    public partial class UserMenu : Window
     {
         public UserMenu()
         {

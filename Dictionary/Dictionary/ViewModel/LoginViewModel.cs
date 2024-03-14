@@ -58,5 +58,10 @@ namespace Dictionary.ViewModel
         private bool HasUsername => !string.IsNullOrEmpty(Username);
         private bool HasPassword => !string.IsNullOrEmpty(Password);
 
+        public event EventHandler LoginSuccess;
+        public void OnLoginSuccess()
+        {
+            LoginSuccess?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

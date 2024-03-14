@@ -18,7 +18,7 @@ namespace Dictionary.View
     /// <summary>
     /// Interaction logic for AdminMenu.xaml
     /// </summary>
-    public partial class AdminMenu : UserControl
+    public partial class AdminMenu : Window
     {
         public AdminMenu()
         {

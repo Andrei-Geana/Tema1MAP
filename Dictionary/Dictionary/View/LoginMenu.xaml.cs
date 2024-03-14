@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dictionary.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,12 +19,22 @@ namespace Dictionary.View
     /// <summary>
     /// Interaction logic for LoginMenu.xaml
     /// </summary>
-    public partial class LoginMenu : UserControl
+    public partial class LoginMenu : Window
     {
         public LoginMenu()
         {
-
             InitializeComponent();
+            LoginViewModel loginViewModel = new LoginViewModel();
+            loginViewModel.LoginSuccess += LoginViewModel_LoginSuccess;
+            DataContext = loginViewModel;
+        }
+
+        private void LoginViewModel_LoginSuccess(object sender, EventArgs e)
+        {
+            // Închide fereastra curentă
+            this.Close();
+            AdminMenu loginMenu = new AdminMenu();
+            loginMenu.Show();
         }
     }
 }

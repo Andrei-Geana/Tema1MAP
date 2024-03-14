@@ -1,4 +1,5 @@
 ﻿using Dictionary.Model;
+using Dictionary.View;
 using Dictionary.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,8 @@ namespace Dictionary.Command
 
         private void ExecuteLogin(object parameter)
         {
-            MessageBox.Show("You are now logged in!", "Login success", MessageBoxButton.OK, MessageBoxImage.Information);
-            //got to other pages
+            MessageBox.Show("You are now logged in!", "Login success", MessageBoxButton.OK, MessageBoxImage.Information); 
+            _loginViewModel.OnLoginSuccess();
         }
     }
 }
