@@ -85,17 +85,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddWordCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />
+    <Compile Include="Command\DeleteWordCommand.cs" />
+    <Compile Include="Command\ModifyWordCommand.cs" />
+    <Compile Include="Command\NewWordCommand.cs" />
     <Compile Include="Command\QuizNextWorkCommand.cs" />
     <Compile Include="Command\QuizPreviousWordCommand.cs" />
     <Compile Include="Command\ResetLoginButton.cs" />
     <Compile Include="Command\SubmitLoginCommand.cs" />
     <Compile Include="Service\IntToStringConverter.cs" />
     <Compile Include="Service\StringToImageConverter.cs" />
+    <Compile Include="ViewModel\AdminMenuViewModel.cs" />
     <Compile Include="ViewModel\DivertismentViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\UserMenuViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AdminMenu.xaml.cs">
+      <DependentUpon>AdminMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Divertisment.xaml.cs">
       <DependentUpon>Divertisment.xaml</DependentUpon>
     </Compile>
@@ -117,6 +125,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AdminMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Divertisment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

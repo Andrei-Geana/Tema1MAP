@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -90,6 +91,42 @@ namespace Dictionary.Model
                 return new ObservableCollection<string>();
             return new ObservableCollection<string>(
                  words.DefaultIfEmpty().Select(w => w.Category).Distinct().ToList());
+        }
+
+        private void WriteWordsInDatabaseToFile()
+        {
+            try
+            {
+                using (StreamWriter file = File.CreateText(_pathToWords))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, words);
+                }
+            }
+            catch (Exception) { }
+        }
+
+        public void AddWord(Word newWord)
+        {
+            if (string.IsNullOrEmpty(newWord.WordValue))
+                throw new NotImplementedException();
+            if (words.Where(word => word.WordValue==newWord.WordValue).ToList().Count>0)
+                throw new Exception();
+            words.Add(newWord);
+            WriteWordsInDatabaseToFile();
+        }
+
+        public void DeleteWord(Word word)
+        {
+            if(!words.Contains(word)) throw new Exception();
+            words.Remove(word);
+            WriteWordsInDatabaseToFile();
+        }
+
+        public void ModifyWord(Word word, int index)
+        {
+            words[index] = word;
+            WriteWordsInDatabaseToFile();
         }
     }
 }
