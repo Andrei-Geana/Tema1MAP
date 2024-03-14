@@ -27,6 +27,7 @@ namespace Dictionary.ViewModel
             NewWordCommand = new NewWordCommand(this);
             AddWordCommand = new AddWordCommand(this);
             ModifyWordCommand = new ModifyWordCommand(this);
+            DeleteWordCommand = new DeleteWordCommand(this);
         }
 
         public ObservableCollection<Word> Words 
@@ -106,6 +107,19 @@ namespace Dictionary.ViewModel
             }
             emulator.ModifyWord(CurrentWord, Words.IndexOf(CurrentWord));
             Words = emulator.GetWordsFromFile();
+            Categories = emulator.GetCategories();
+        }
+
+        public void DeleteWord()
+        {
+            if (CurrentWord is null)
+            {
+                MessageBox.Show("Nu ai selectat un cuvant!");
+                return;
+            }
+            emulator.DeleteWord(Words.IndexOf(CurrentWord));
+            Words = emulator.GetWordsFromFile();
+            NewWord();
             Categories = emulator.GetCategories();
         }
     }

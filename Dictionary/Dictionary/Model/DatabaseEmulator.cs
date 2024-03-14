@@ -116,15 +116,16 @@ namespace Dictionary.Model
             WriteWordsInDatabaseToFile();
         }
 
-        public void DeleteWord(Word word)
+        public void DeleteWord(int index)
         {
-            if(!words.Contains(word)) throw new Exception();
-            words.Remove(word);
+            if (index < 0 || index > words.Count) throw new Exception();
+            words.RemoveAt(index);
             WriteWordsInDatabaseToFile();
         }
 
         public void ModifyWord(Word word, int index)
         {
+            if(index<0 || index>words.Count) throw new Exception();
             words[index] = word;
             WriteWordsInDatabaseToFile();
         }

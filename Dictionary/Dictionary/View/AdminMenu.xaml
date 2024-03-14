@@ -43,7 +43,7 @@
             <Button Content="New word" Margin="5" Command="{Binding NewWordCommand, UpdateSourceTrigger=PropertyChanged}" ></Button>
             <Button Content="Add word" Margin="5" Command="{Binding AddWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
             <Button Content="Modify word" Margin="5" Command="{Binding ModifyWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
-            <Button Content="Delete word" Margin="5"></Button>
+            <Button Content="Delete word" Margin="5" Command="{Binding DeleteWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
         </WrapPanel>
         <!--<Button Grid.Row="2" Grid.Column="0" Content="GO TO MAIN MENU" HorizontalAlignment="Left" VerticalAlignment="Bottom" />-->
 
