@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dictionary.View" xmlns:local1="clr-namespace:Dictionary.Service" xmlns:vm="clr-namespace:Dictionary.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+        Width="800" Height="450" ResizeMode="NoResize">
 
     <Window.Resources>
         <local1:StringToImageConverter x:Key="StringToImage"/>
@@ -17,84 +18,78 @@
 
     <Grid Background="White" ShowGridLines="False">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 15 5 5"  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 0 0"  HorizontalAlignment="Center" VerticalAlignment="Center">
             <WrapPanel>
-                <Label Content="Word" FontSize="8px" Width="42"/>
+                <Label Content="Word:" FontSize="14"/>
                 <ComboBox 
-                    Name="ComboBoxWords"
-                    Height="26" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Width="250" 
-                    ItemsSource="{Binding FilteredWords, UpdateSourceTrigger=PropertyChanged}"
-                    DisplayMemberPath="WordValue"
-                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                    IsEditable="True"
-                    IsTextSearchEnabled="False"
-                    SelectionChanged="ComboBoxWords_SelectionChanged"
-                    TextBoxBase.TextChanged="ComboBoxWords_TextChanged"
-                    IsDropDownOpen="False"
-                />
+                Name="ComboBoxWords"
+                Height="30"
+                Width="250" 
+                ItemsSource="{Binding FilteredWords, UpdateSourceTrigger=PropertyChanged}"
+                DisplayMemberPath="WordValue"
+                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                IsEditable="True"
+                IsTextSearchEnabled="False"
+                SelectionChanged="ComboBoxWords_SelectionChanged"
+                TextBoxBase.TextChanged="ComboBoxWords_TextChanged"
+                IsDropDownOpen="False"
+            />
             </WrapPanel>
             <WrapPanel>
-                <Label Content="Category" FontSize="8px"/>
+                <Label Content="Category:" FontSize="14"/>
                 <ComboBox 
-                    Name="ComboBoxCategory"
-                    Height="26" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Width="250" 
-                    ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
-                    SelectionChanged="ComboBoxCategory_SelectionChanged"
-                />
+                Name="ComboBoxCategory"
+                Height="30"
+                Width="250" 
+                ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
+                SelectionChanged="ComboBoxCategory_SelectionChanged"
+            />
             </WrapPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="5 15 5 5"  HorizontalAlignment="Center" VerticalAlignment="Center">
-            <WrapPanel>
-                <Label Content="Category" FontSize="8px" Width="42"/>
-                <TextBox 
-                    Grid.Row="1"
-                    Margin="0 5 0 0"
-                    Height="26" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Width="250"
-                    Text="{Binding CurrentWord.Category, UpdateSourceTrigger=PropertyChanged}"
-                    IsReadOnly="True"/>
-            </WrapPanel>
-            <WrapPanel>
-                <Label Content="Description" FontSize="8px" Width="42"/>
-                <TextBox 
-                    Margin="0 5 0 0"
-                    Height="26" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Left" 
-                    Width="250"
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Orientation="Vertical" Margin="0 50">
+            <TextBlock Text="Description:" FontSize="16" Height="20" Width="244"/>
+            <TextBox 
                     Text="{Binding CurrentWord.Description, UpdateSourceTrigger=PropertyChanged}"
-                    IsReadOnly="True"/>
-            </WrapPanel>
+                    TextWrapping="Wrap"
+                    IsReadOnly="True" Width="250"/>
         </StackPanel>
-        <TextBlock Grid.Row="0" Grid.Column="1" 
-                   Text="{Binding CurrentWord.WordValue, UpdateSourceTrigger=PropertyChanged}"
+
+        <Border Grid.Row = "0" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="20">
+            <Image 
+                    Source="{Binding CurrentWord.PathToImage, Converter={StaticResource StringToImage}}"
+                    Stretch="Uniform"
+                    />
+        </Border>
+
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="{Binding CurrentWord.WordValue, UpdateSourceTrigger=PropertyChanged}"
                    FontSize="16px"
-                   FontStretch="Expanded"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   />
-        <Image Grid.Row="1" 
-               Grid.RowSpan="2" Grid.Column="1" 
-               Source="{Binding CurrentWord.PathToImage, Converter={StaticResource StringToImage}}"
-               Margin="0 0 0 50"
-               />
-        <Button Grid.Row="2" Grid.Column="0" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50px"/>
+                    FontStretch="Expanded"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"/>
+            <Label Grid.Row="1" Content="{Binding CurrentWord.Category, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="8px" Margin="0 -20"
+                       FontStretch="Expanded"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+        </Grid>
+
     </Grid>
 </Window>

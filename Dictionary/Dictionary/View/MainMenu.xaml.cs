@@ -1,4 +1,5 @@
 ﻿using Dictionary.Model;
+using Dictionary.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,11 @@ namespace Dictionary.View
 
         private void Quiz_Click(object sender, RoutedEventArgs e)
         {
+            if (databaseEmulator.GetWordsFromFile().Count < DivertismentViewModel._numberOfRounds)
+            {
+                MessageBox.Show("UNABLE TO START QUIZ: NOT ENOUGH WORDS IN DATABASE");
+                return;
+            }
             Divertisment lWind = new Divertisment(databaseEmulator);
             lWind.ShowDialog();
         }

@@ -45,7 +45,8 @@ namespace Dictionary.ViewModel
 
                 if (Category ==_defaultCategory)
                     return words.Where(word => word.WordValue.StartsWith(SearchText)).ToList();
-                if(Category != _defaultCategory)
+
+                if (Category != _defaultCategory)
                     return words.Where(word => word.WordValue.StartsWith(SearchText) && word.Category==Category).ToList();
 
                 return words.Where(word => word.WordValue.StartsWith(SearchText)).ToList();

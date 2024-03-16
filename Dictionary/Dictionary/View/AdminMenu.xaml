@@ -1,11 +1,17 @@
 ﻿<Window x:Class="Dictionary.View.AdminMenu"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Dictionary.View" xmlns:vm="clr-namespace:Dictionary.ViewModel" xmlns:local1="clr-namespace:Dictionary.Service"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:Dictionary.View" 
+        xmlns:vm="clr-namespace:Dictionary.ViewModel" 
+        xmlns:local1="clr-namespace:Dictionary.Service"
+        mc:Ignorable="d" 
+        d:DesignHeight="600" d:DesignWidth="800"
+        Height="600"
+        Width="800" 
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow">
 
     <Window.Resources>
         <local1:StringToImageConverter x:Key="StringToImage"/>
@@ -14,55 +20,59 @@
     <Window.DataContext>
         <vm:AdminMenuViewModel/>
     </Window.DataContext>
-    
-    <Grid Background="White" ShowGridLines="True">
+
+    <Grid Background="AntiqueWhite" ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-            <WrapPanel >
-                <Label Content="Word"></Label>
-                <TextBox Text="{Binding CurrentWord.WordValue, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            </WrapPanel>
-            <WrapPanel>
-                <Label Content="Category"></Label>
-                <ComboBox SelectedItem="{Binding CurrentWord.Category, Mode=TwoWay}" Text="{Binding CurrentWord.Category, UpdateSourceTrigger=PropertyChanged}" 
-                  ItemsSource="{Binding Categories}" IsEditable="True"/>
-            </WrapPanel>
-        </StackPanel>
-        <Label Grid.Row="0" Grid.Column="0" Content="Description" VerticalAlignment="Bottom" ></Label>
-        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding CurrentWord.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-        <WrapPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <Button Content="New word" Margin="5" Command="{Binding NewWordCommand, UpdateSourceTrigger=PropertyChanged}" ></Button>
-            <Button Content="Add word" Margin="5" Command="{Binding AddWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
-            <Button Content="Modify word" Margin="5" Command="{Binding ModifyWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
-            <Button Content="Delete word" Margin="5" Command="{Binding DeleteWordCommand, UpdateSourceTrigger=PropertyChanged}"></Button>
-        </WrapPanel>
-        <!--<Button Grid.Row="2" Grid.Column="0" Content="GO TO MAIN MENU" HorizontalAlignment="Left" VerticalAlignment="Bottom" />-->
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Word:" VerticalAlignment="Center" Height="27" Width="60"/>
+                <TextBox Text="{Binding CurrentWord.WordValue, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="149"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="Category:" Width="61" Height="26"/>
+                <ComboBox SelectedItem="{Binding CurrentWord.Category, Mode=TwoWay}" 
+                          ItemsSource="{Binding Categories}" 
+                          IsEditable="True" 
+                          Text="{Binding CurrentWord.Category, UpdateSourceTrigger=PropertyChanged}" 
+                          Margin="5" Width="148"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Description:" VerticalAlignment="Top" Margin="10, -10"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding CurrentWord.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" Margin="10"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="New Word" Margin="5" Command="{Binding NewWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#2196F3" Foreground="White"/>
+            <Button Content="Add Word" Margin="5" Command="{Binding AddWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#4CAF50" Foreground="White"/>
+            <Button Content="Modify Word" Margin="5" Command="{Binding ModifyWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#FFC107" Foreground="White"/>
+            <Button Content="Delete Word" Margin="5" Command="{Binding DeleteWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#F44336" Foreground="White"/>
+        </StackPanel>
 
         <DataGrid Grid.Row="0"
-                  Grid.Column="2"
+                  Grid.Column="1"
                   ItemsSource="{Binding Words}"
                   AutoGenerateColumns="False"
                   ColumnWidth="*" 
-                  Margin="20,5,20,5"
+                  Margin="10"
                   CanUserAddRows="False"
                   IsReadOnly="True"
                   SelectedItem="{Binding CurrentWord, Mode=TwoWay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding WordValue, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
-                    </DataGrid.Columns>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Word" Binding="{Binding WordValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
         </DataGrid>
-        <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Source="{Binding CurrentWord.PathToImage, Converter={StaticResource StringToImage}}"/>
 
+        <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Source="{Binding CurrentWord.PathToImage, Converter={StaticResource StringToImage}}" Margin="10"/>
     </Grid>
 </Window>

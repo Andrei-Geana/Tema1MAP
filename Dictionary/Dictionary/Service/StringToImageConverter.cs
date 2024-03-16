@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -25,8 +26,10 @@ namespace Dictionary.Service
                     else
                     {
                         string basePath = AppDomain.CurrentDomain.BaseDirectory;
-                        string fullPath = Path.Combine(basePath, imagePath.TrimStart('.', '/').Replace('/', Path.DirectorySeparatorChar));
+                        MessageBox.Show(basePath);
 
+                        string fullPath = Path.Combine(basePath, imagePath.TrimStart('.', '/').Replace('/', Path.DirectorySeparatorChar));
+                        MessageBox.Show(fullPath);
                         return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
                     }
                 }

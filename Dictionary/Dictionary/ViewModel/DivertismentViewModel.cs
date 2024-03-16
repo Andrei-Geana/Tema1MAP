@@ -19,7 +19,7 @@ namespace Dictionary.ViewModel
         private DatabaseEmulator emulator;
         private List<Word> words;
         private int _currentRoundIndex = 0;
-        private int _numberOfRounds = 5;
+        public static int _numberOfRounds = 5;
 
         public DivertismentViewModel()
         {
@@ -170,12 +170,12 @@ namespace Dictionary.ViewModel
 
         public string RightButtonContent
         {
-            get => (CurrentRoundIndex == NumberOfRounds) ? "Finish" : "Next";
+            get => (CurrentRoundIndex == NumberOfRounds) ? "FINISH" : "NEXT";
         }
 
         public bool LeftButtonIsEnabled
         {
-            get => (CurrentRoundIndex != 1) ? true : false;
+            get => (CurrentRoundIndex != 1);
         }
 
         private void NotifyAll()
