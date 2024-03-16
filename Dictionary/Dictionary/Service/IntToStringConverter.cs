@@ -13,11 +13,9 @@ namespace Dictionary.Service
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            // Asigură-te că sunt furnizate exact două valori
             if (values.Length != 2)
                 return DependencyProperty.UnsetValue;
 
-            // Formatează textul utilizând primul și al doilea parametru
             return string.Format("{0} / {1}", values[0], values[1]);
         }
 

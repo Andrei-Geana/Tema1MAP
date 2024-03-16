@@ -26,10 +26,10 @@ namespace Dictionary.Service
                     else
                     {
                         string basePath = AppDomain.CurrentDomain.BaseDirectory;
-                        MessageBox.Show(basePath);
+                       // MessageBox.Show(basePath);
 
                         string fullPath = Path.Combine(basePath, imagePath.TrimStart('.', '/').Replace('/', Path.DirectorySeparatorChar));
-                        MessageBox.Show(fullPath);
+                        //MessageBox.Show(fullPath);
                         return new BitmapImage(new Uri(fullPath, UriKind.Absolute));
                     }
                 }

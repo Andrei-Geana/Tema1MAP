@@ -3,11 +3,14 @@ using Dictionary.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Dictionary.ViewModel
 {
@@ -33,6 +36,8 @@ namespace Dictionary.ViewModel
             AddWordCommand = new AddWordCommand(this);
             ModifyWordCommand = new ModifyWordCommand(this);
             DeleteWordCommand = new DeleteWordCommand(this);
+            ChangeImageCommand = new ChangeImageCommand(this);
+
         }
 
         public ObservableCollection<Word> Words 
@@ -67,6 +72,7 @@ namespace Dictionary.ViewModel
         public ICommand AddWordCommand { get; }
         public ICommand ModifyWordCommand { get; }
         public ICommand DeleteWordCommand { get; }
+        public ICommand ChangeImageCommand { get; }
 
         public void AddWord()
         {
@@ -84,7 +90,7 @@ namespace Dictionary.ViewModel
             }
             catch (NotImplementedException)
             {
-                MessageBox.Show("Campul denumirii nu poate fi gol!");
+                MessageBox.Show("Nu poti lasa campurile goale!");
             }
             catch (Exception)
             {
@@ -97,7 +103,28 @@ namespace Dictionary.ViewModel
             CurrentWord = new Word();
         }
 
-        public bool CanAddWord => !string.IsNullOrEmpty(CurrentWord.WordValue);
+        public bool CanAddWord => _canAddWord();
+
+        private bool _canAddWord()
+        {
+
+            if (CurrentWord == null) return false;
+
+            if (string.IsNullOrEmpty(CurrentWord.WordValue)) return false;
+
+            char[] specialChars = { '_', '\'', '"', '#', '$', '%', '^', '*', '(', ')', ' ' };
+
+            if (CurrentWord.WordValue.Any(c => specialChars.Contains(c))) return false;
+
+            if (string.IsNullOrEmpty(CurrentWord.Category)) return false;
+
+            if (CurrentWord.Category.Any(c => specialChars.Contains(c))) return false;
+
+
+            if (string.IsNullOrEmpty(CurrentWord.Description)) return false;
+            return true;
+        }
+
 
         public void ModifyWord()
         {
@@ -106,14 +133,14 @@ namespace Dictionary.ViewModel
                 MessageBox.Show("Nu ai selectat un cuvant!");
                 return;
             }
-            if(string.IsNullOrEmpty(CurrentWord.WordValue))
+            if(!CanAddWord)
             {
-                MessageBox.Show("Cuvantul trebuie sa aiba o denumire!");
+                MessageBox.Show("Datele introduse nu sunt valide!");
                 return;
             }
             emulator.ModifyWord(CurrentWord, Words.IndexOf(CurrentWord));
             Words = emulator.GetWordsFromFile();
-            NewWord();
+            //NewWord();
             Categories = emulator.GetCategories();
         }
 
@@ -128,6 +155,39 @@ namespace Dictionary.ViewModel
             Words = emulator.GetWordsFromFile();
             NewWord();
             Categories = emulator.GetCategories();
+        }
+
+        public void ChangeImage()
+        {
+            if (CurrentWord is null)
+            {
+                MessageBox.Show("YOU DIDNT SELECT A WORD YET");
+                return;
+            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Images|*.jpg;*.jpeg;*.png;*.bmp|All files|*.*";
+            if (openFileDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                string sourceFilePath = openFileDialog.FileName;
+
+                string resourcesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource/Image/");
+
+                if (!Directory.Exists(resourcesDirectory))
+                {
+                    Directory.CreateDirectory(resourcesDirectory);
+                }
+
+                string fileName = Path.GetFileName(sourceFilePath);
+                string destinationFilePath = Path.Combine(resourcesDirectory, fileName);
+
+                File.Copy(sourceFilePath, destinationFilePath, true);
+
+
+                string relativeUriPath = $"./Resource/Image/{fileName}";
+                CurrentWord.PathToImage = relativeUriPath;
+                ModifyWord();
+                OnPropertyChanged(nameof(CurrentWord));
+            }
         }
     }
 }

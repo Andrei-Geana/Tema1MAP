@@ -14,8 +14,8 @@ namespace Dictionary.Model
         public ObservableCollection<Word> words;
         public ObservableCollection<User> users;
 
-        private static readonly string _pathToWords = "D:\\facultate\\an2\\sem2\\MAP\\Tema1MAP\\Dictionary\\Dictionary\\Resource\\worddata.json";
-        private static readonly string _pathToUsers = "D:\\facultate\\an2\\sem2\\MAP\\Tema1MAP\\Dictionary\\Dictionary\\Resource\\userdata.json";
+        private static readonly string _pathToWords = AppDomain.CurrentDomain.BaseDirectory + "Resource/worddata.json";
+        private static readonly string _pathToUsers = AppDomain.CurrentDomain.BaseDirectory + "Resource/userdata.json";
 
         public DatabaseEmulator() 
         {
@@ -125,7 +125,10 @@ namespace Dictionary.Model
 
         public void ModifyWord(Word word, int index)
         {
-            if(index<0 || index>words.Count) throw new Exception();
+            if (index < 0 || index > words.Count)
+            {
+                return;
+            }
             words[index] = word;
             WriteWordsInDatabaseToFile();
         }

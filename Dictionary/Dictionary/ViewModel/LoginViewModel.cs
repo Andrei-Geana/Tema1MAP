@@ -59,7 +59,7 @@ namespace Dictionary.ViewModel
         }
 
         public bool CanExecuteLogin => HasUsername && HasPassword && UserIsValid;
-        private bool UserIsValid => users.Contains(new User(Username, Password));
+        private bool UserIsValid => !Username.Contains(' ') && !Password.Contains(' ') && users.Contains(new User(Username, Password));
         private bool HasUsername => !string.IsNullOrEmpty(Username);
         private bool HasPassword => !string.IsNullOrEmpty(Password);
 
