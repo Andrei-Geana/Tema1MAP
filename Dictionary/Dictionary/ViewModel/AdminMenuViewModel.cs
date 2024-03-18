@@ -20,7 +20,7 @@ namespace Dictionary.ViewModel
         private ObservableCollection<Word> _words;
         private Word _currentWord;
         private ObservableCollection<string> _categories;
-
+        private static string _defaultCategory = "all";
         public AdminMenuViewModel()
         {
             /*EMPTY*/
@@ -83,6 +83,8 @@ namespace Dictionary.ViewModel
             }
             try
             {
+                if (string.IsNullOrEmpty(CurrentWord.Category)) CurrentWord.Category = _defaultCategory;
+                if (!CanAddWord) throw new ArgumentException();
                 emulator.AddWord(CurrentWord);
                 Words = emulator.GetWordsFromFile(); 
                 NewWord();
@@ -92,6 +94,10 @@ namespace Dictionary.ViewModel
             {
                 MessageBox.Show("Empty fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch(ArgumentException)
+            {
+                MessageBox.Show("Invalid data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception)
             {
                 MessageBox.Show("Word already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -100,7 +106,7 @@ namespace Dictionary.ViewModel
 
         public void NewWord()
         {
-            CurrentWord = new Word();
+            CurrentWord = new Word(null,_defaultCategory,null);
         }
 
         public bool CanAddWord => _canAddWord();
@@ -116,12 +122,12 @@ namespace Dictionary.ViewModel
 
             if (CurrentWord.WordValue.Any(c => specialChars.Contains(c))) return false;
 
+            if (string.IsNullOrEmpty(CurrentWord.Description)) return false;
+
             if (string.IsNullOrEmpty(CurrentWord.Category)) return false;
 
             if (CurrentWord.Category.Any(c => specialChars.Contains(c))) return false;
 
-
-            if (string.IsNullOrEmpty(CurrentWord.Description)) return false;
             return true;
         }
 
@@ -172,11 +178,6 @@ namespace Dictionary.ViewModel
                 string sourceFilePath = openFileDialog.FileName;
 
                 string resourcesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource/Image/");
-
-                if (!Directory.Exists(resourcesDirectory))
-                {
-                    Directory.CreateDirectory(resourcesDirectory);
-                }
 
                 string fileName = Path.GetFileName(sourceFilePath);
                 string destinationFilePath = Path.Combine(resourcesDirectory, fileName);

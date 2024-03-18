@@ -48,14 +48,12 @@
             </StackPanel>
         </StackPanel>
 
-        <Button Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Change image" Margin="0,14,17,0" Command="{Binding ChangeImageCommand, UpdateSourceTrigger=PropertyChanged}" Background="BlueViolet" Foreground="White" Height="20"/>
-
-
         <Label Grid.Row="1" Grid.Column="0" Content="Description:" VerticalAlignment="Top" Margin="10, -10"/>
         <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding CurrentWord.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" Margin="10"/>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <Button Content="New Word" Margin="5" Command="{Binding NewWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#2196F3" Foreground="White"/>
+            <Button Content="Change image" Margin="5" Command="{Binding ChangeImageCommand, UpdateSourceTrigger=PropertyChanged}" Background="BlueViolet" Foreground="White"/>
             <Button Content="Add Word" Margin="5" Command="{Binding AddWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#4CAF50" Foreground="White"/>
             <Button Content="Modify Word" Margin="5" Command="{Binding ModifyWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#FFC107" Foreground="White"/>
             <Button Content="Delete Word" Margin="5" Command="{Binding DeleteWordCommand, UpdateSourceTrigger=PropertyChanged}" Background="#F44336" Foreground="White"/>
