@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Dictionary.View" xmlns:local1="clr-namespace:Dictionary.Service" xmlns:vm="clr-namespace:Dictionary.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-        Width="800" Height="450" ResizeMode="NoResize">
+             Title="User interface" 
+             Width="800" Height="450" ResizeMode="NoResize"
+        >
 
     <Window.Resources>
         <local1:StringToImageConverter x:Key="StringToImage"/>

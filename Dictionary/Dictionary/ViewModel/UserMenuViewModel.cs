@@ -18,7 +18,8 @@ namespace Dictionary.ViewModel
             words = emulator.GetWordsFromFile();
 
             ObservableCollection<string> categories = emulator.GetCategories();
-            categories.Add(_defaultCategory);
+            if(!categories.Contains(_defaultCategory))
+                categories.Add(_defaultCategory);
             Categories = categories;
 
             _defaultWord = new Word("-", _defaultCategory, "-");

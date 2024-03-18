@@ -102,7 +102,6 @@ namespace Dictionary.ViewModel
 
         private void DecideIfImagineIsShownForEachWord()
         {
-            //Returns true if an image is to be shown, or false otherwise
             var random = new Random();
             for(int index=0; index<NumberOfRounds;index++)
             {
@@ -111,7 +110,7 @@ namespace Dictionary.ViewModel
                     _imageIsShown[index] = false;
                     continue;
                 }
-                int k = random.Next(int.MaxValue);
+                int k = random.Next(2);
                 if (k % 2 == 1)
                     _imageIsShown[index] = true;
                 else
@@ -155,7 +154,18 @@ namespace Dictionary.ViewModel
         private void ShowScore()
         {
             int score = CalculateScore();
-            MessageBox.Show($"Your score is {score} out of {_numberOfRounds}");
+            if (score == 0)
+            {
+                MessageBox.Show($"Your score is {score}/{_numberOfRounds}", "Score", MessageBoxButton.OK, MessageBoxImage.Question);
+            }
+            else if (score == _numberOfRounds)
+            {
+                MessageBox.Show($"Your score is {score}/{_numberOfRounds}", "Score", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show($"Your score is {score}/{_numberOfRounds}", "Score", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private int CalculateScore()

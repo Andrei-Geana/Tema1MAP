@@ -8,6 +8,7 @@
         xmlns:serv="clr-namespace:Dictionary.Service"
         mc:Ignorable="d" 
         d:DesignHeight="450" d:DesignWidth="800"
+        Title="Quiz" 
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow">
 

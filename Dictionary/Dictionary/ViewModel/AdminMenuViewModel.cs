@@ -78,7 +78,7 @@ namespace Dictionary.ViewModel
         {
             if(_words.Contains(CurrentWord))
             {
-                MessageBox.Show("Cuvantul nu poate fi readaugat!");
+                MessageBox.Show("Word already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             try
@@ -90,11 +90,11 @@ namespace Dictionary.ViewModel
             }
             catch (NotImplementedException)
             {
-                MessageBox.Show("Nu poti lasa campurile goale!");
+                MessageBox.Show("Empty fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception)
             {
-                MessageBox.Show("Cuvantul deja exista!");
+                MessageBox.Show("Word already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -130,12 +130,13 @@ namespace Dictionary.ViewModel
         {
             if(CurrentWord is null)
             {
-                MessageBox.Show("Nu ai selectat un cuvant!");
+                MessageBox.Show("You haven't selected a word.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(!CanAddWord)
             {
-                MessageBox.Show("Datele introduse nu sunt valide!");
+
+                MessageBox.Show("Input values are not valid.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             emulator.ModifyWord(CurrentWord, Words.IndexOf(CurrentWord));
@@ -148,7 +149,7 @@ namespace Dictionary.ViewModel
         {
             if (CurrentWord is null || string.IsNullOrEmpty(CurrentWord.WordValue))
             {
-                MessageBox.Show("Nu ai selectat un cuvant!");
+                MessageBox.Show("You haven't selected a word.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             emulator.DeleteWord(Words.IndexOf(CurrentWord));
@@ -161,7 +162,7 @@ namespace Dictionary.ViewModel
         {
             if (CurrentWord is null)
             {
-                MessageBox.Show("YOU DIDNT SELECT A WORD YET");
+                MessageBox.Show("You haven't selected a word.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();

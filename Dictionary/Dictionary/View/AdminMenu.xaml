@@ -8,6 +8,7 @@
         xmlns:local1="clr-namespace:Dictionary.Service"
         mc:Ignorable="d" 
         d:DesignHeight="600" d:DesignWidth="800"
+        Title="Administrator menu" 
         Height="600"
         Width="800" 
         ResizeMode="NoResize"
